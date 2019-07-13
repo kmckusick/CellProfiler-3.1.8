@@ -3904,6 +3904,8 @@ OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
             class_table = self.get_table_prefix() + self.properties_class_table_name.value
 
             contents = """ This is just a bypass on the Analyst properties file """
+            logger.info(contents)
+            logger.info(str(locals()))
 
             """#%(date)s
 # ==============================================

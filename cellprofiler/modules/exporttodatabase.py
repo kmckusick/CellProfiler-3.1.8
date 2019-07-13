@@ -3903,7 +3903,9 @@ OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
                 self.properties_well_metadata.value)
             class_table = self.get_table_prefix() + self.properties_class_table_name.value
 
-            contents = """#%(date)s
+            contents = """ This is just a bypass on the Analyst properties file """
+
+            """#%(date)s
 # ==============================================
 #
 # CellProfiler Analyst 2.0 properties file
@@ -4053,7 +4055,8 @@ class_table  = %(class_table)s
 # your object_table is extremely large.
 
 check_tables = yes
-    """%(locals())
+    ###%(locals())
+            """
             
             result.append(Properties(properties_object_name,
                                      file_name,

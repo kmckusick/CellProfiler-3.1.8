@@ -4078,6 +4078,8 @@ class_table  = %(class_table)s
 
 check_tables = yes
     """ % (locals())
+
+
             result.append(Properties(properties_object_name,
                                      file_name,
                                      contents))

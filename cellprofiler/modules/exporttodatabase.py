@@ -3932,9 +3932,6 @@ image_id      = %(unique_id)s
 object_id     = %(object_id)s
 plate_id      = %(plate_id)s
 well_id       = %(well_id)s
-series_id     = Image_Group_Number
-group_id      = Image_Group_Number
-timepoint_id  = Image_Group_Index
 
 # Also specify the column names that contain X and Y coordinates for each
 # object within an image.
@@ -3951,11 +3948,11 @@ cell_y_loc    = %(cell_y_loc)s
 # path and filename column to the per-image table of your database and then
 # adding those column names here.
 #
-# Note that these lists must have equal length!
+# NOTE: These lists must have equal length!
 image_path_cols = %(image_path_cols)s
 image_file_cols = %(image_file_cols)s
 
-# CellProfiler Analyst will now read image thumbnails directly from the database, if chosen in ExportToDatabase.
+# CPA will now read image thumbnails directly from the database, if chosen in ExportToDatabase.
 image_thumbnail_cols = %(image_thumbnail_cols)s
 
 # Give short names for each of the channels (respectively)...
@@ -3969,7 +3966,7 @@ image_channel_colors = %(image_channel_colors)s
 image_url_prepend = %(image_url)s
 
 # ==== Dynamic Groups ====
-# Here you can define groupings to choose from when classifier scores your experiment.  (e.g., per-well)
+# Here you can define groupings to choose from when classifier scores your experiment.  (eg: per-well)
 # This is OPTIONAL, you may leave "groups = ".
 # FORMAT:
 #   group_XXX  =  MySQL select statement that returns image-keys and group-keys.  This will be associated with the group name "XXX" from above.
@@ -4025,33 +4022,12 @@ classifier_ignore_columns  =  table_number_key_column, image_number_key_column, 
 # Specify the approximate diameter of your objects in pixels here.
 image_tile_size   =  50
 
-# Provides the image width and height. Used for per-image classification.
-# If not set, it will be obtained from the Image_Width and Image_Height
-# measurements in CellProfiler.
-
-# image_width  = 1000
-# image_height = 1000
-
-# OPTIONAL
-# Image Gallery can use a different tile size (in pixels) to create thumbnails for images
-# If not set, it will be the same as image_tile_size
-
-image_size =
-
-# ======== Classification type ========
-# OPTIONAL
-# CPA 2.2.0 allows image classification instead of object classification.
-# If left blank or set to "object", then Classifier will fetch objects (default).
-# If set to "image", then Classifier will fetch whole images instead of objects.
-
-classification_type  = %(classification_type)s
-
 # ======== Auto Load Training Set ========
 # OPTIONAL
 # You may enter the full path to a training set that you would like Classifier
 # to automatically load when started.
 
-training_set  =
+training_set  = 
 
 # ======== Area Based Scoring ========
 # OPTIONAL
@@ -4077,9 +4053,8 @@ class_table  = %(class_table)s
 # your object_table is extremely large.
 
 check_tables = yes
-    """ % (locals())
-
-
+    """%(locals())
+            
             result.append(Properties(properties_object_name,
                                      file_name,
                                      contents))

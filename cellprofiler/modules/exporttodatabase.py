@@ -3904,6 +3904,22 @@ OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
             class_table = self.get_table_prefix() + self.properties_class_table_name.value
 
             contents = """ This is just a bypass on the Analyst properties file """
+            contents = """#%(date)s
+# ==============================================
+#
+# CellProfiler Analyst 2.0 properties file
+#
+# ==============================================
+
+# ==== Database Info ====
+%(db_info)s
+
+# ==== Database Tables ====
+image_table   = %(spot_tables)s
+object_table  = %(cell_tables)s
+
+    """ %(locals())
+
             logger.info(contents)
             logger.info(str(locals()))
 

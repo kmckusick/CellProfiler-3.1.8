@@ -3905,7 +3905,7 @@ OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
 
             contents = """ This is just a bypass on the Analyst properties file """
             contents = """
-#
+#%(date)s
 # ==============================================
 #
 # CellProfiler Analyst 2.0 properties file
@@ -3913,26 +3913,6 @@ OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
 # ==============================================
 
 # ==== Database Info ====
-#
-
-# ==== Database Tables ====
-image_table   = %(spot_tables)s
-object_table  = %(cell_tables)s
-
-    """ %(locals())
-
-            logger.info(contents)
-            logger.info(str(locals()))
-
-            """#%(date)s
-# ==============================================
-#
-# CellProfiler Analyst 2.0 properties file
-#
-# ==============================================
-
-# ==== Database Info ====
-%(db_info)s
 
 # ==== Database Tables ====
 image_table   = %(spot_tables)s
@@ -4074,8 +4054,11 @@ class_table  = %(class_table)s
 # your object_table is extremely large.
 
 check_tables = yes
-    ###%(locals())
-            """
+""" %(locals())
+
+            logger.info(contents)
+            logger.info(str(locals()))
+
             
             result.append(Properties(properties_object_name,
                                      file_name,

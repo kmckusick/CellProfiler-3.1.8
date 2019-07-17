@@ -113,7 +113,7 @@ import cellprofiler.module
 import cellprofiler.object
 import cellprofiler.setting
 
-TEXTURE = "Texture"
+TEXTURE = "Tx"
 
 F_HARALICK = """AngularSecondMoment Contrast Correlation Variance
 InverseDifferenceMoment SumAverage SumVariance SumEntropy Entropy

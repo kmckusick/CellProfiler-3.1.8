@@ -2569,6 +2569,7 @@ available:
             if self.separate_object_tables == OT_COMBINE:
                 statement = self.get_create_object_table_statement(
                         None, pipeline, image_set_list)
+                logger.info(statement)
                 execute(cursor, statement, return_result=False)
             else:
                 for object_name in self.get_object_names(pipeline,

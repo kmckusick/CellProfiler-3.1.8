@@ -2993,13 +2993,19 @@ CREATE TABLE %s (
             data = []
         for statement in self.get_experiment_table_statements(workspace):
             fid.write(statement + ";\n")
-        fid.write("""
+        logger.info("TABLE NAME Trouble")
+        logger.info(cellprofiler.measurement.IMAGE)
+        logger.info(self.get_table_prefix())
+        try:
+            fid.write("""
 LOAD DATA LOCAL INFILE '%s_%s.CSV' REPLACE INTO TABLE %s
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
 """ %
                   (self.base_name(workspace), cellprofiler.measurement.IMAGE,
                    self.get_table_name(cellprofiler.measurement.IMAGE)))
+        except:
+            logger.info("CANT WRITE troublesome table")
 
         for gcot_name, object_name in data:
             fid.write("""

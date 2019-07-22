@@ -277,6 +277,8 @@ COL_OBJECT_NUMBER2 = "object_number2"
 
 
 def execute(cursor, query, bindings=None, return_result=True):
+    logger.info('execute')
+    logger.info(query)
     if bindings is None:
         cursor.execute(query)
     else:
@@ -2969,7 +2971,7 @@ CREATE TABLE %s (
         path_name = self.make_full_filename(file_name, workspace)
         logger.info("BAD PATH")
         logger.info(path_name)
-        fid = open("/var/tmp/tmpdata.txt", "wt")
+        fid = open("/var/tmp/tmpdata2.txt", "wt")
         fid.write("CREATE DATABASE IF NOT EXISTS %s;\n" % self.db_name.value)
         fid.write("USE %s;\n" % self.db_name.value)
         fid.write(self.get_create_image_table_statement(pipeline,

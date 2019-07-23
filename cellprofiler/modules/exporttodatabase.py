@@ -2994,6 +2994,7 @@ CREATE TABLE %s (
         for statement in self.get_experiment_table_statements(workspace):
             fid.write(statement + ";\n")
         logger.info("TABLE NAME Trouble")
+        logger.info(self.base_name(workspace))
         logger.info(cellprofiler.measurement.IMAGE)
         logger.info(self.get_table_prefix())
         try:

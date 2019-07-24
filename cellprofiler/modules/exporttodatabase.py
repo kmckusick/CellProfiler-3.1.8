@@ -277,8 +277,6 @@ COL_OBJECT_NUMBER2 = "object_number2"
 
 
 def execute(cursor, query, bindings=None, return_result=True):
-    logger.info('execute')
-    logger.info(query)
     if bindings is None:
         cursor.execute(query)
     else:
@@ -2571,7 +2569,6 @@ available:
             if self.separate_object_tables == OT_COMBINE:
                 statement = self.get_create_object_table_statement(
                         None, pipeline, image_set_list)
-                logger.info(statement)
                 execute(cursor, statement, return_result=False)
             else:
                 for object_name in self.get_object_names(pipeline,
@@ -2969,9 +2966,7 @@ CREATE TABLE %s (
         metadata_name_width = 128
         file_name = "%sSETUP.SQL" % self.sql_file_prefix
         path_name = self.make_full_filename(file_name, workspace)
-        logger.info("BAD PATH")
-        logger.info(path_name)
-        logger.info(self.sql_file_prefix)
+        # work around bad chars coming through in path and file name
         fid = open("/var/tmp/%s_SETUP.SQL" % self.db_name.value, "wt")
         fid.write("CREATE DATABASE IF NOT EXISTS %s;\n" % self.db_name.value)
         fid.write("USE %s;\n" % self.db_name.value)
@@ -2994,20 +2989,14 @@ CREATE TABLE %s (
             data = []
         for statement in self.get_experiment_table_statements(workspace):
             fid.write(statement + ";\n")
-        logger.info("TABLE NAME Trouble")
-        logger.info(self.base_name(workspace))
-        logger.info(cellprofiler.measurement.IMAGE)
-        logger.info(self.get_table_prefix())
-        try:
-            fid.write("""
+
+        fid.write("""
 LOAD DATA LOCAL INFILE '%s_%s.CSV' REPLACE INTO TABLE %s
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
 """ %
                   (self.db_name.value, cellprofiler.measurement.IMAGE,
                    self.get_table_name(cellprofiler.measurement.IMAGE)))
-        except:
-            logger.info("CANT WRITE troublesome table")
 
         for gcot_name, object_name in data:
             fid.write("""
@@ -3916,7 +3905,8 @@ OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
                 self.properties_well_metadata.value)
             class_table = self.get_table_prefix() + self.properties_class_table_name.value
 
-            contents = """ This is just a bypass on the Analyst properties file """
+            # db_info has bad chars; must manually add database info 
+            # into the Analyst properties file
             contents = """
 #%(date)s
 # ==============================================
@@ -4035,6 +4025,22 @@ classifier_ignore_columns  =  table_number_key_column, image_number_key_column, 
 # ==== Other ====
 # Specify the approximate diameter of your objects in pixels here.
 image_tile_size   =  50
+
+# Provides the image width and height. Used for per-image classification.
+# If not set, it will be obtained from the Image_Width and Image_Height
+# measurements in CellProfiler.
+# image_width  = 1000
+# image_height = 1000
+# OPTIONAL
+# Image Gallery can use a different tile size (in pixels) to create thumbnails for images
+# If not set, it will be the same as image_tile_size
+image_size =
+# ======== Classification type ========
+# OPTIONAL
+# CPA 2.2.0 allows image classification instead of object classification.
+# If left blank or set to "object", then Classifier will fetch objects (default).
+# If set to "image", then Classifier will fetch whole images instead of objects.
+classification_type  = %(classification_type)s
 
 # ======== Auto Load Training Set ========
 # OPTIONAL

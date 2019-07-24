@@ -3003,7 +3003,7 @@ LOAD DATA LOCAL INFILE '%s_%s.CSV' REPLACE INTO TABLE %s
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
 """ %
-                  ("HARDCODEME_1", cellprofiler.measurement.IMAGE,
+                  (self.db_name.value, cellprofiler.measurement.IMAGE,
                    self.get_table_name(cellprofiler.measurement.IMAGE)))
         except:
             logger.info("CANT WRITE troublesome table")
@@ -3013,7 +3013,7 @@ OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
 LOAD DATA LOCAL INFILE '%s_%s.CSV' REPLACE INTO TABLE %s
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
-""" % ("HARDCODEME_1", object_name,
+""" % (self.db_name.value, object_name,
        self.get_table_name(object_name)))
 
         if self.objects_choice != O_NONE and self.separate_object_tables == OT_VIEW:
@@ -3027,7 +3027,7 @@ OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
 LOAD DATA LOCAL INFILE '%s_%s.CSV' REPLACE INTO TABLE %s
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
-""" % ("HARDCODEME_1", T_RELATIONSHIPS,
+""" % (self.db_name.value, T_RELATIONSHIPS,
        self.get_table_name(T_RELATIONSHIPS)))
         if self.wants_well_tables:
             self.write_mysql_table_per_well(
@@ -3153,7 +3153,7 @@ OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
         measurements = workspace.measurements
         pipeline = workspace.pipeline
         image_set_list = workspace.image_set_list
-        image_filename = self.make_full_filename('%s_%s.CSV' % ("HARDCODEME_1",
+        image_filename = self.make_full_filename('%s_%s.CSV' % (self.db_name.value,
                                                                 cellprofiler.measurement.IMAGE),
                                                  workspace)
         fid_per_image = open(image_filename, "wb")
@@ -3208,7 +3208,7 @@ OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
             data = [(object_name, [object_name])
                     for object_name in object_names]
         for file_object_name, object_list in data:
-            file_name = "%s_%s.CSV" % ("HARDCODEME_1",
+            file_name = "%s_%s.CSV" % (self.db_name.value,
                                        file_object_name)
             file_name = self.make_full_filename(file_name)
             fid = open(file_name, "wb")
@@ -3260,7 +3260,7 @@ OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
         #
         if self.wants_relationship_table:
             file_name = "%s_%s.CSV" % (
-                "HARDCODEME_1", T_RELATIONSHIPS)
+                self.db_name.value, T_RELATIONSHIPS)
             file_name = self.make_full_filename(file_name)
             with open(file_name, "wb") as fid:
                 csv_writer = csv.writer(fid, lineterminator='\n')

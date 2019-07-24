@@ -2971,7 +2971,8 @@ CREATE TABLE %s (
         path_name = self.make_full_filename(file_name, workspace)
         logger.info("BAD PATH")
         logger.info(path_name)
-        fid = open("/var/tmp/tmpdata2.txt", "wt")
+        logger.info(self.sql_file_prefix)
+        fid = open("/var/tmp/%s_SETUP.SQL" % self.sql_file_prefix, "wt")
         fid.write("CREATE DATABASE IF NOT EXISTS %s;\n" % self.db_name.value)
         fid.write("USE %s;\n" % self.db_name.value)
         fid.write(self.get_create_image_table_statement(pipeline,

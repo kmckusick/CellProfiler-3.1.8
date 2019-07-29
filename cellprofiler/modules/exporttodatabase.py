@@ -3912,6 +3912,8 @@ OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
                 self.properties_well_metadata.value)
             class_table = self.get_table_prefix() + self.properties_class_table_name.value
 
+
+            logger.info('WELL ID %s' % well_id)
             # db_info has bad chars; must manually add database info 
             # into the Analyst properties file
             contents = """

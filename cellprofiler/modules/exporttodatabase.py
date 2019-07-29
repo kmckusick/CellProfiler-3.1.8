@@ -3914,6 +3914,10 @@ OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
 
 
             logger.info('WELL ID %s' % well_id)
+            xwid = """well_id       = %(well_id)s """ %(locals())
+            logger.info(xwid)
+
+            logger.info(''
             # db_info has bad chars; must manually add database info 
             # into the Analyst properties file
             contents = """

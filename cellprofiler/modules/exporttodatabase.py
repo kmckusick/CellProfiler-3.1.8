@@ -2704,15 +2704,8 @@ CREATE TABLE %s (
         mappings = self.get_column_name_mappings(pipeline, image_set_list)
         columns = self.get_pipeline_measurement_columns(
                 pipeline, image_set_list)
-        # This is too many columns for mysql
-        # Instead, break out particular cellpaint features
-        # This is hardcoded to work with CellPaint
         for column in columns:
             obname, feature, ftype = column[:3]
-            logger.info("obname and feature and ftype")
-            logger.info(obname)
-            logger.info(feature)
-            logger.info(ftype)
             if obname == cellprofiler.measurement.IMAGE and not self.ignore_feature(obname, feature):
                 if ftype.startswith(cellprofiler.measurement.COLTYPE_VARCHAR):
                     ftype = "TEXT"
@@ -3912,10 +3905,12 @@ OPTIONALLY ENCLOSED BY '"' ESCAPED BY '\\\\';
                 self.properties_well_metadata.value)
             class_table = self.get_table_prefix() + self.properties_class_table_name.value
 
-
-            logger.info('WELL ID %s' % well_id)
             # db_info has bad chars; must manually add database info 
             # into the Analyst properties file
+            logger.info("TMPX")
+            tmpx = """well_id       = %(well_id)s """ %(locals())
+            logger.info(tmpx)
+
             contents = """
 #%(date)s
 # ==============================================
@@ -3945,9 +3940,6 @@ image_id      = %(unique_id)s
 object_id     = %(object_id)s
 plate_id      = %(plate_id)s
 well_id       = %(well_id)s
-series_id     = Image_Group_Number
-group_id      = Image_Group_Number
-timepoint_id  = Image_Group_Index
 
 # Also specify the column names that contain X and Y coordinates for each
 # object within an image.
@@ -4087,6 +4079,8 @@ class_table  = %(class_table)s
 check_tables = yes
 """ %(locals())
 
+            logger.info(contents)
+            logger.info(str(locals()))
 
             
             result.append(Properties(properties_object_name,
@@ -4730,3 +4724,4 @@ class SQLiteCommands(object):
     def execute_all(self, cursor):
         for query, binding in self.commands_and_bindings:
             execute(cursor, query, binding)
+

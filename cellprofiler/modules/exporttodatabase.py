@@ -3940,6 +3940,9 @@ image_id      = %(unique_id)s
 object_id     = %(object_id)s
 plate_id      = %(plate_id)s
 well_id       = %(well_id)s
+series_id     = Image_Group_Number
+group_id      = Image_Group_Number
+timepoint_id  = Image_Group_Index
 
 # Also specify the column names that contain X and Y coordinates for each
 # object within an image.
@@ -4079,10 +4082,6 @@ class_table  = %(class_table)s
 check_tables = yes
 """ %(locals())
 
-            logger.info(contents)
-            logger.info(str(locals()))
-
-            
             result.append(Properties(properties_object_name,
                                      file_name,
                                      contents))
@@ -4724,4 +4723,3 @@ class SQLiteCommands(object):
     def execute_all(self, cursor):
         for query, binding in self.commands_and_bindings:
             execute(cursor, query, binding)
-
